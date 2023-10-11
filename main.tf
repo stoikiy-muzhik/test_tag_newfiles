@@ -5,8 +5,11 @@ resource "azurerm_storage_account" "storageaccount" {
   cross_tenant_replication_enabled  = false
   infrastructure_encryption_enabled = true
   min_tls_version                   = var.min_tls_version
-  tags                              = merge( local.common_tags, local.extra_tags)
-  
+  tags = merge(local.common_tags, local.extra_tags, {
+    git_org   = "stoikiy-muzhik"
+    yor_trace = "58627dd1-229d-4257-9f69-6d3603c73c6f"
+  })
+
   dynamic "blob_properties" {
     for_each = var.is_hns_enabled ? [] : ["true"]
     content {
